@@ -12,13 +12,8 @@
 *.blg
 
 # Ansys & Fluent large data files
-*.cas
-*.dat
-*.dat.h5
 *.msh
 *.msh.h5
-*.wbpj
-*_files/
 *.trn
 *.trn.trn
 *.trn.bak
