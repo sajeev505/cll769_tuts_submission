@@ -1,38 +1,70 @@
 \documentclass[11pt,a4paper]{article}
-\usepackage{graphicx}
-\usepackage{amsmath}
-\usepackage{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,graphicx,booktabs,hyperref,siunitx,geometry,float}
 \geometry{margin=1in}
-\graphicspath{{../}}
+\hypersetup{colorlinks=true,linkcolor=blue,urlcolor=blue}
 
-\title{Assignment 1: Laminar Flow through a Pipe}
-\author{Sajeev}
+\title{Tutorial 1: Steady Laminar Pipe Flow}
+\author{Sajeev \\ CLL769: Applications of CFD}
 \date{August 2025}
 
 \begin{document}
 \maketitle
 
-\section{Governing Equations \& Setup}
-The steady, incompressible, axisymmetric laminar flow is governed by the Continuity and Navier-Stokes equations:
-\begin{align*}
-\nabla \cdot \vec{U} &= 0 \\
-\rho (\vec{U} \cdot \nabla) \vec{U} &= -\nabla P + \mu \nabla^2 \vec{U}
-\end{align*}
-Simulations were performed for $Re=100$. A uniform velocity inlet, pressure outlet, and no-slip wall boundaries were applied. Discretization was performed using the QUICK scheme for momentum and SIMPLE for pressure-velocity coupling, with convergence criteria of $10^{-6}$.
+\section{Problem Statement \& Objective}
+The objective is to perform numerical simulations of a steady, laminar flow of a Newtonian, incompressible fluid in a pipe. The system involves a pipe of length 1 m and radius 0.1 m operating in the laminar regime at $Re = 100$. An axisymmetric 2D simulation is performed to validate CFD predictions against analytical solutions (Hagen-Poiseuille flow), verify grid independence, and analyze wall shear stress.
 
-\section{Grid Independence \& Validation}
-Three grids (Coarse, Medium, Fine) were evaluated. The velocity profile and pressure drop across the pipe length stabilized at the Medium grid (20 mm $\times$ 5 mm with 1.08 bias factor). The fully developed velocity profile perfectly matched the analytical Hagen-Poiseuille parabolic profile:
-\[ u(r) = 2U_{\text{avg}} \left( 1 - \left(\frac{r}{R}\right)^2 \right) \]
-For a mean velocity $U_{\text{avg}} = 0.5$ m/s, the analytical maximum velocity at the axis ($r=0$) is $u_{max} = 1.0$ m/s, which perfectly matched the CFD predictions. Furthermore, using $\Delta P / L = 8\mu U_{\text{avg}} / R^2$, with $\mu = 0.001$ kg/m-s and $R = 0.1$ m, the expected pressure drop of $0.4$ Pa/m was achieved in the fully developed region.
+\section{Governing Equations}
+The flow is governed by the steady-state, incompressible Navier-Stokes equations for a Newtonian fluid:
+\begin{align}
+\nabla \cdot \vec{U} &= 0 \quad \text{(Continuity)} \\
+\rho (\vec{U} \cdot \nabla) \vec{U} &= -\nabla P + \mu \nabla^2 \vec{U} \quad \text{(Momentum)}
+\end{align}
+In the axisymmetric cylindrical coordinate system, the azimuthal velocity and $\theta$-derivatives are zero, reducing the equations to 2D $(r, z)$.
 
-\begin{figure}[h!]
+\section{Computational Setup}
+The boundary conditions applied are a velocity inlet and a pressure outlet (0 gauge). The top edge is a wall with a no-slip condition, and the bottom edge represents the axis of symmetry. To achieve $Re = 100$ with $D=0.2$ m, fluid properties were set to $\rho = 1$ kg/m$^3$, $U = 0.5$ m/s, and $\mu = 0.001$ kg/m-s.
+
+A pressure-based, steady, axisymmetric solver was used with the SIMPLE algorithm for pressure-velocity coupling and the QUICK scheme for spatial discretization of momentum.
+
+\section{Geometry \& Meshing}
+Three meshes were evaluated to verify grid independence: Coarse ($50 \times 10$ mm), Medium ($20 \times 5$ mm with a 1.08 bias factor towards the wall), and Fine ($5 \times 2$ mm).
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.45\linewidth]{vel-prof-graph.png}
-    \includegraphics[width=0.45\linewidth]{wall-sheer-graph.png}
-    \caption{Left: Fully developed velocity profile vs Analytical. Right: Wall shear stress evolution.}
+    \includegraphics[width=0.6\linewidth]{../tut1_mesh.png}
+    \caption{Representative view of the computational grid (Medium mesh).}
 \end{figure}
 
-\section{Analysis of Results}
-The velocity vectors and contours show the flow entering with a uniform velocity and a boundary layer growing from the wall, eventually converging at the axis to form a fully developed parabolic profile. The wall shear stress exhibits a very high value at the entrance due to sharp velocity gradients, decreasing exponentially and reaching a constant asymptote in the fully developed region. An alternative approach using periodic boundary conditions and mass flow specification can completely bypass this entry region simulation, yielding the fully developed profile instantly.
+\section{Results \& Discussion}
+\subsection{Velocity Distribution}
+The flow enters with a uniform velocity and gradually develops into a parabolic profile. The maximum velocity occurs at the axis, and zero velocity at the wall due to the no-slip condition.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.48\linewidth]{../tut1_vel_cont.png}
+    \includegraphics[width=0.48\linewidth]{../tut1_vel_vect.png}
+    \caption{Velocity magnitude contour (left) and vectors (right).}
+\end{figure}
+
+\subsection{Validation: Velocity Profile \& Pressure Drop}
+The predicted fully developed profile matches the analytical parabolic solution perfectly:
+\[ u(r) = 2U_{\text{avg}} \left( 1 - \left(\frac{r}{R}\right)^2 \right) \]
+For $U_{\text{avg}} = 0.5$ m/s, the analytical maximum velocity at the axis ($r=0$) is $u_{max} = 1.0$ m/s, which perfectly matched the CFD predictions. Furthermore, using the Hagen-Poiseuille equation $\Delta P / L = 8\mu U_{\text{avg}} / R^2$, with $\mu = 0.001$ kg/m-s and $R = 0.1$ m, the expected pressure drop of $0.4$ Pa/m was precisely achieved in the fully developed region.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\linewidth]{../tut1_vel_prof.png}
+    \caption{Fully developed radial velocity profile.}
+\end{figure}
+
+\subsection{Wall Shear Stress}
+Near the inlet, the velocity gradient at the wall is extremely steep, resulting in high wall shear stress. As the boundary layer grows and the flow develops, the wall shear stress decreases exponentially, eventually reaching a constant horizontal asymptote once the flow is fully developed.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\linewidth]{../tut1_wall_shear.png}
+    \caption{Variation of wall shear stress along the pipe length.}
+\end{figure}
+
+\subsection{Alternative Approach: Periodic Boundary Conditions}
+If the entrance region development is not of interest, the fully developed flow can be directly simulated using translationally periodic boundary conditions. The inlet and outlet are linked as a periodic pair, and a specified mass flow rate is enforced. The simulation instantly yields the fully developed parabolic velocity profile across the entire domain, saving computational cost by avoiding the long entrance length.
 
 \end{document}

@@ -1,34 +1,51 @@
 \documentclass[11pt,a4paper]{article}
-\usepackage{graphicx}
-\usepackage{amsmath}
-\usepackage{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,graphicx,booktabs,hyperref,siunitx,geometry,float}
 \geometry{margin=1in}
-\graphicspath{{../}}
+\hypersetup{colorlinks=true,linkcolor=blue,urlcolor=blue}
 
-\title{Assignment 2: Flow Over a Cylinder}
-\author{Sajeev}
-\date{September 2025}
+\title{Tutorial 2: Flow Over a Cylinder}
+\author{Sajeev \\ CLL769: Applications of CFD}
+\date{August 2025}
 
 \begin{document}
 \maketitle
 
-\section{Governing Equations \& Setup}
-The unsteady, 2D incompressible flow over a cylinder is simulated by solving the transient Continuity and Navier-Stokes equations. 
-Simulations were conducted at $Re=272$ (Laminar) and $Re=2902$ (Standard $k-\epsilon$ turbulence model). The SIMPLE algorithm, QUICK momentum scheme, and 2nd Order Implicit transient formulation were employed with a convergence target of $10^{-6}$. 
+\section{Problem Statement \& Objective}
+The objective is to perform 2D numerical simulations of unsteady flow of a Newtonian, incompressible fluid over a cylinder to study vortex shedding. The system consists of a domain of $15 \times 5$ m with a cylinder of diameter $D=1$ m located 5 m from the inlet. Flow regimes studied are Laminar ($Re = 272$) and Turbulent ($Re = 2902$) with an inlet velocity $U = 0.5$ m/s and density $\rho = 1$ kg/m$^3$.
 
-\section{Flow Fields \& Vortex Shedding}
-A block-structured grid with high refinement near the cylinder was used to capture boundary layer separation. 
-At $Re=272$, the flow separates behind the cylinder, forming a distinct, alternating Von Kármán vortex street in the wake. 
-However, at $Re=2902$ using the Standard $k-\epsilon$ model, the vortex shedding is almost completely damped out, resulting in a steady, smeared, symmetric wake. This is a known limitation of the standard $k-\epsilon$ RANS formulation, which generates excessive turbulent viscosity in wake regions, suppressing the physical instabilities.
+\section{Computational Setup}
+A velocity inlet of $0.5$ m/s and a pressure outlet (0 gauge) were used, alongside no-slip conditions on walls and the cylinder. A pressure-based, transient, planar solver was utilized with the SIMPLE algorithm, QUICK momentum discretization, and 2nd Order Implicit transient formulation. The laminar case utilized the Laminar viscous model, while the turbulent case utilized the Standard $k-\epsilon$ model.
 
-\begin{figure}[h!]
+\section{Geometry \& Meshing}
+A block-structured quadrilateral mesh was generated. The grid is highly refined near the cylinder walls to capture the boundary layer separation and wake dynamics accurately, while far-field regions are slightly coarser to optimize computational cost.
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.48\linewidth]{vel-contour-272-2000.png}
-    \includegraphics[width=0.48\linewidth]{vel-contour-2902-2000.png}
-    \caption{Velocity contours. Left: $Re=272$ (Laminar). Right: $Re=2902$ (Standard $k-\epsilon$).}
+    \includegraphics[width=0.6\linewidth]{../mesh.png}
+    \caption{Block-structured computational grid around the cylinder.}
 \end{figure}
 
-\section{Frequency Analysis}
-Monitoring the $y$-velocity in the wake over time allowed for frequency analysis. For $Re=272$, the oscillation period $T$ from the probe data was approximately $11$ s, yielding a shedding frequency $f \approx 0.091$ Hz. This perfectly aligns with the analytical expected Strouhal number $St = fD/U \approx 0.183$ (which predicts $f = 0.183 \times 0.5 / 1 = 0.0915$ Hz). Conversely, the turbulent simulation ($Re=2902$) showed damped probe data, failing to capture the physical shedding frequency unless more advanced models (e.g., RSM, LES) are used.
+\section{Results \& Discussion}
+\subsection{Velocity Contours: Vortex Street}
+At $Re=272$, distinct alternating vortices (Von Kármán vortex street) are shed. When switching to the Standard $k-\epsilon$ model ($Re=2902$), the vortex shedding is heavily damped and the wake is smeared, a known limitation of the standard RANS formulation due to excessive turbulent viscosity production in the wake.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.48\linewidth]{../vel-contour-272-2000.png}
+    \includegraphics[width=0.48\linewidth]{../vel-contour-2902-2000.png}
+    \caption{Velocity contours. Left: Laminar ($Re = 272$). Right: Turbulent ($Re = 2902$).}
+\end{figure}
+
+\subsection{Frequency Analysis}
+The y-velocity at a point behind the cylinder was monitored. For the laminar case ($Re=272$), the oscillation period $T$ from the probe data was approximately $11$ s, yielding a shedding frequency $f \approx 0.091$ Hz. This perfectly aligns with the analytical expected Strouhal number $St = fD/U \approx 0.183$ (which predicts $f = 0.183 \times 0.5 / 1 = 0.0915$ Hz). For the turbulent case, the Standard $k-\epsilon$ model damped out the oscillations entirely, yielding a steady symmetric wake.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.48\linewidth]{../xy-272-2000.png}
+    \includegraphics[width=0.48\linewidth]{../xy-2902-2000.png}
+    \caption{Frequency analysis probe data. Left: Laminar. Right: Turbulent.}
+\end{figure}
+
+\subsection{Animation}
+A solution animation was recorded during the transient simulation to capture the dynamics of the wake formation and the vortex shedding process over time. 
+\textbf{Watch Animation:} \href{https://github.com/sajeev505/cll769_tuts_submission/blob/main/Tut_2/turbulent-vortex-video.mpeg}{Click here to view the video on GitHub!}
 
 \end{document}
