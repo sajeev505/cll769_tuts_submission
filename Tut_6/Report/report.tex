@@ -1,0 +1,34 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{geometry}
+\geometry{margin=1in}
+\graphicspath{{../}}
+
+\title{Assignment 6: 2D VOF Simulation of Bubble Rise}
+\author{Sajeev}
+\date{October 2025}
+
+\begin{document}
+\maketitle
+
+\section{Governing Equations \& Setup}
+The Volume of Fluid (VOF) method was used to simulate the rise of a single 6 mm air bubble in a quiescent water column. 
+VOF solves a single set of momentum equations shared by the fluids, and the phase interfaces are tracked by solving the volume fraction continuity equation:
+\[ \frac{\partial \alpha_q}{\partial t} + \nabla \cdot (\alpha_q \vec{v}) = 0 \]
+Despite solving fewer equations than Eulerian-Eulerian approaches, VOF is computationally expensive because it requires extremely fine meshes and very small time steps to properly resolve and construct the sharp physical interface without numerical diffusion.
+
+\section{Courant Number Significance}
+The Courant number ($C = v \Delta t / \Delta x$) restricts the time step size relative to the mesh size. For explicit VOF formulations, $C$ must generally be kept $< 1$ (often $\sim 0.1$) to ensure that the fluid interface does not cross more than one cell per time step, preventing severe numerical smearing and maintaining a sharp gas-liquid interface.
+
+\section{Bubble Deformation \& Terminal Velocity}
+An explicit Geometric Reconstruction scheme with a Laminar viscous model was applied on a uniform grid ($0.75$ mm element size).
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.4\linewidth]{tut6_bubble_t4.png}
+    \caption{Deformed bubble tracking.}
+\end{figure}
+
+Initially spherical, the bubble rapidly deforms into a dimpled/skirted shape as it accelerates. Hydrodynamic forces (buoyancy vs drag) quickly overcome the surface tension forces holding it spherical. This behavior accurately matches the physical shape regimes predicted by the Clift et al. (1978) bubble diagram. The vertical velocity rises sharply and eventually asymptotes as drag balances buoyancy, achieving the terminal rise velocity.
+
+\end{document}
