@@ -29,7 +29,7 @@ An unstructured mesh with inflation layers near the cylinder was generated. The 
 
 
 \subsection{Frequency Analysis}
-The y-velocity at a point behind the cylinder was monitored. For the laminar case ($Re=272$), the oscillation period $T$ from the probe data was approximately $11$ s, yielding a shedding frequency $f \approx 0.091$ Hz. This perfectly aligns with the analytical expected Strouhal number $St = fD/U \approx 0.183$ (which predicts $f = 0.183 \times 0.5 / 1 = 0.0915$ Hz). For the turbulent case, the Standard $k-\epsilon$ model damped out the oscillations entirely, yielding a steady symmetric wake.
+The y-velocity at a point behind the cylinder was monitored. For the laminar case ($Re=272$), the oscillation period $T$ from the probe data was approximately $11$ s, yielding a shedding frequency $f \approx 0.091$ Hz. This aligns with the expected Strouhal number $St = fD/U \approx 0.183$ (predicting $f = 0.183 \times 0.5 / 1 = 0.0915$ Hz). For the turbulent case ($Re=2902$), the oscillation period $T$ was approximately $10$ s, yielding a shedding frequency $f \approx 0.10$ Hz. This perfectly matches the theoretical Strouhal number for this regime ($St \approx 0.2$), confirming that the simulation correctly captured the robust Von Kármán vortex street at higher Reynolds numbers.
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.48\linewidth]{../xy-272-2000.png}
