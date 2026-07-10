@@ -18,11 +18,11 @@ The objective is to perform 2D numerical simulations of unsteady flow of a Newto
 A velocity inlet of $0.5$ m/s and a pressure outlet (0 gauge) were used, alongside no-slip conditions on walls and the cylinder. A pressure-based, transient, planar solver was utilized with the SIMPLE algorithm, QUICK momentum discretization, and 2nd Order Implicit transient formulation. The laminar case utilized the Laminar viscous model, while the turbulent case utilized the Standard $k-\epsilon$ model.
 
 \section{Geometry \& Meshing}
-A block-structured quadrilateral mesh was generated. The grid is highly refined near the cylinder walls to capture the boundary layer separation and wake dynamics accurately, while far-field regions are slightly coarser to optimize computational cost.
+An unstructured mesh with inflation layers near the cylinder was generated. The grid is highly refined near the cylinder walls to capture the boundary layer separation and wake dynamics accurately, while far-field regions are slightly coarser to optimize computational cost.
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.6\linewidth]{../mesh.png}
-    \caption{Block-structured computational grid around the cylinder.}
+    \caption{Computational grid around the cylinder.}
 \end{figure}
 
 \section{Results \& Discussion}
