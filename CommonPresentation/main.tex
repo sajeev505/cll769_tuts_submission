@@ -297,18 +297,19 @@
         \begin{column}{0.48\textwidth}
             \centering
             \textbf{Laminar ($Re = 272$)}\\
-            \includegraphics[width=\linewidth,height=0.4\textheight,keepaspectratio]{xy-272-2000.png}
+            \includegraphics[width=\linewidth,height=0.4\textheight,keepaspectratio]{xy-272-2000.png}\\
+            {\scriptsize \textit{$f \approx 0.105$ Hz ($St_{sim} \approx 0.21$).}}
         \end{column}
         \begin{column}{0.48\textwidth}
             \centering
             \textbf{Turbulent ($Re = 2902$)}\\
             \includegraphics[width=\linewidth,height=0.4\textheight,keepaspectratio]{xy-2902-2000.png}\\
-            {\scriptsize \textit{$f \approx 0.10$ Hz (matches $St \approx 0.20$).}}
+            {\scriptsize \textit{$f \approx 0.133$ Hz ($St_{sim} \approx 0.27$, expected $0.20$).}}
         \end{column}
     \end{columns}
     \vspace{0.2cm}
     \begin{block}{Frequency Analysis}
-    The y-velocity at a point behind the cylinder was monitored. For the laminar case ($Re=272$), the oscillation period $T \approx 11$ s gives a shedding frequency $f \approx 0.091$ Hz ($St \approx 0.183$). For the turbulent case ($Re=2902$), the oscillation period is $T \approx 10$ s, yielding $f \approx 0.10$ Hz. This perfectly matches the theoretical Strouhal number $St \approx 0.20$, showing robust vortex shedding instead of being damped out.
+    For the laminar case ($Re=272$), the oscillation period $T \approx 9.5$ s gives $f \approx 0.105$ Hz ($St \approx 0.21$), matching theoretical expectations. For the turbulent case ($Re=2902$), the $k-\epsilon$ model yields $T \approx 7.5$ s ($f \approx 0.133$ Hz, $St \approx 0.27$). This overpredicts the expected $St \approx 0.20$, demonstrating the limitations of the standard RANS model for unsteady separated wake dynamics.
     \end{block}
 \end{frame}
 
