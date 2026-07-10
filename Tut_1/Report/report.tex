@@ -12,7 +12,7 @@
 \maketitle
 
 \section{Problem Statement \& Objective}
-The objective is to perform numerical simulations of a steady, laminar flow of a Newtonian, incompressible fluid in a pipe. The system involves a pipe of length 1 m and radius 0.1 m operating in the laminar regime at $Re = 100$. An axisymmetric 2D simulation is performed to validate CFD predictions against analytical solutions (Hagen-Poiseuille flow), verify grid independence, and analyze wall shear stress.
+The objective is to perform numerical simulations of a steady, laminar flow of a Newtonian, incompressible fluid in a pipe. The system involves a pipe of length 1 m and radius 0.1 m operating in the laminar regime at $Re = 100$. An axisymmetric 2D simulation is performed to validate CFD predictions against analytical solutions (Hagen-Poiseuille flow) and analyze wall shear stress.
 
 \section{Governing Equations}
 The flow is governed by the steady-state, incompressible Navier-Stokes equations for a Newtonian fluid:
@@ -28,11 +28,11 @@ The boundary conditions applied are a velocity inlet and a pressure outlet (0 ga
 A pressure-based, steady, axisymmetric solver was used with the SIMPLE algorithm for pressure-velocity coupling and the QUICK scheme for spatial discretization of momentum.
 
 \section{Geometry \& Meshing}
-Three meshes were evaluated to verify grid independence: Coarse ($50 \times 10$ mm), Medium ($20 \times 5$ mm with a 1.08 bias factor towards the wall), and Fine ($5 \times 2$ mm).
+An axisymmetric 2D structured mesh was created for the pipe. A bias factor was applied towards the wall to adequately resolve the velocity gradients in the boundary layer.
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.6\linewidth]{../tut1_mesh.png}
-    \caption{Representative view of the computational grid (Medium mesh).}
+    \caption{Representative view of the computational grid.}
 \end{figure}
 
 \section{Results \& Discussion}
@@ -47,13 +47,16 @@ The flow enters with a uniform velocity and gradually develops into a parabolic 
 
 \subsection{Validation: Velocity Profile \& Pressure Drop}
 The predicted fully developed profile matches the analytical parabolic solution perfectly:
-\[ u(r) = 2U_{\text{avg}} \left( 1 - \left(\frac{r}{R}\right)^2 \right) \]
-For $U_{\text{avg}} = 0.5$ m/s, the analytical maximum velocity at the axis ($r=0$) is $u_{max} = 1.0$ m/s, which perfectly matched the CFD predictions. Furthermore, using the Hagen-Poiseuille equation $\Delta P / L = 8\mu U_{\text{avg}} / R^2$, with $\mu = 0.001$ kg/m-s and $R = 0.1$ m, the expected pressure drop of $0.4$ Pa/m was precisely achieved in the fully developed region.
+\[ u(r) = 2(0.5) \left( 1 - \left(\frac{r}{0.1}\right)^2 \right) = 1.0\left( 1 - 100r^2 \right) \text{ m/s} \]
+For $U_{\text{avg}} = 0.5$ m/s, the analytical maximum velocity at the axis ($r=0$) is $u_{max} = 1.0$ m/s, which perfectly matched the CFD predictions. Furthermore, using the Hagen-Poiseuille equation:
+\[ \frac{\Delta P}{L} = \frac{8 \mu U_{\text{avg}}}{R^2} = \frac{8 (0.001) (0.5)}{(0.1)^2} = 0.4 \text{ Pa/m} \]
+The simulated pressure drop exactly matched this calculated analytical value of $0.4$ Pa/m in the fully developed region.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.6\linewidth]{../tut1_vel_prof.png}
-    \caption{Fully developed radial velocity profile.}
+    \includegraphics[width=0.48\linewidth]{../tut1_vel_prof.png}
+    \includegraphics[width=0.48\linewidth]{../tut1_vel_prof_analytical.png}
+    \caption{Fully developed radial velocity profile. Left: Simulated. Right: Analytical.}
 \end{figure}
 
 \subsection{Wall Shear Stress}
@@ -64,7 +67,6 @@ Near the inlet, the velocity gradient at the wall is extremely steep, resulting 
     \caption{Variation of wall shear stress along the pipe length.}
 \end{figure}
 
-\subsection{Alternative Approach: Periodic Boundary Conditions}
-If the entrance region development is not of interest, the fully developed flow can be directly simulated using translationally periodic boundary conditions. The inlet and outlet are linked as a periodic pair, and a specified mass flow rate is enforced. The simulation instantly yields the fully developed parabolic velocity profile across the entire domain, saving computational cost by avoiding the long entrance length.
+
 
 \end{document}

@@ -57,8 +57,12 @@
     \tableofcontents
 \end{frame}
 
-% --- SECTION 1 ---
-\section{Objective}
+% --- TUTORIAL 1 START ---
+\section{Tutorial 1: Pipe Flow}
+\begin{frame}
+    \centering \Huge \textbf{Tutorial 1: Pipe Flow}
+\end{frame}
+
 \begin{frame}{Problem Statement \& Objective}
     \begin{block}{Objective}
     Perform numerical simulations of a steady, laminar flow of a Newtonian, incompressible fluid in a pipe.
@@ -71,10 +75,7 @@
         \im \textbf{Analysis:} Axisymmetric 2D simulation.
     \ei
     \end{block}
-    \vspace{0.3cm}
-    \begin{alertblock}{Goals}
-    Validate the CFD predictions for the fully developed velocity profile and pressure drop against analytical solutions (Hagen-Poiseuille flow), verify grid independence, and analyze wall shear stress.
-    \end{alertblock}
+    \end{block}
 \end{frame}
 
 % --- SECTION 2 ---
@@ -93,9 +94,6 @@
     \rho (\vec{U} \cdot \nabla) \vec{U} = -\nabla P + \mu \nabla^2 \vec{U}
     \]
     \end{block}
-    
-    \vspace{0.2cm}
-    \textit{Note: In the axisymmetric cylindrical coordinate system, the azimuthal velocity and $\theta$-derivatives are zero, reducing the equations to 2D $(r, z)$.}
 \end{frame}
 
 % --- SECTION 3 ---
@@ -135,19 +133,17 @@
 \begin{frame}{Geometry \& Meshing}
     \begin{columns}[c]
         \begin{column}{0.48\textwidth}
-            \textbf{Grid Refinement Study:}
-            Three meshes were utilized to verify grid independence:
+            \textbf{Mesh Details:}
             \bi
-                \im \textbf{Coarse:} $50$ mm (x) $\times 10$ mm (y).
-                \im \textbf{Medium:} $20$ mm (x) $\times 5$ mm (y) with a smooth transition (bias factor 1.08 towards the wall).
-                \im \textbf{Fine:} $5$ mm (x) $\times 2$ mm (y).
+                \im An axisymmetric 2D structured mesh was created for the pipe.
+                \im A bias factor was applied towards the wall to adequately resolve the velocity gradients in the boundary layer.
             \ei
         \end{column}
         \begin{column}{0.48\textwidth}
             \centering
             \includegraphics[width=\linewidth,height=0.6\textheight,keepaspectratio]{tut1_mesh.png}\\
             \vspace{0.2cm}
-            {\scriptsize \textit{Representative view of the computational grid (Medium mesh).}}
+            {\scriptsize \textit{Representative view of the computational grid.}}
         \end{column}
     \end{columns}
 \end{frame}
@@ -177,27 +173,28 @@
 
 \begin{frame}{Validation: Velocity Profile \& Pressure Drop}
     \begin{columns}[c]
-        \begin{column}{0.5\textwidth}
+        \begin{column}{0.48\textwidth}
             \centering
-            \includegraphics[width=\linewidth,height=0.55\textheight,keepaspectratio]{tut1_vel_prof.png}\\
+            \includegraphics[width=0.48\linewidth,height=0.55\textheight,keepaspectratio]{tut1_vel_prof.png}
+            \includegraphics[width=0.48\linewidth,height=0.55\textheight,keepaspectratio]{tut1_vel_prof_analytical.png}\\
             \vspace{0.1cm}
-            {\scriptsize \textit{Fully developed radial velocity profile.}}
+            {\scriptsize \textit{Left: Simulated. Right: Analytical Profile.}}
         \end{column}
         \begin{column}{0.48\textwidth}
             \begin{block}{Velocity Profile}
             \small
-            The predicted fully developed profile perfectly matches the analytical parabolic solution:
+            The predicted fully developed profile matches the analytical solution perfectly:
             \[
-            u(r) = 2U_{\text{avg}} \left( 1 - \left(\frac{r}{R}\right)^2 \right)
+            u(r) = 2(0.5) \left( 1 - \left(\frac{r}{0.1}\right)^2 \right) = 1.0\left( 1 - 100r^2 \right) \text{ m/s}
             \]
             \end{block}
             \begin{block}{Pressure Drop}
             \small
-            The linear pressure drop in the fully developed region matches the Hagen-Poiseuille equation:
+            The linear pressure drop matches the Hagen-Poiseuille equation:
             \[
-            \frac{\Delta P}{L} = \frac{8 \mu U_{\text{avg}}}{R^2}
+            \frac{\Delta P}{L} = \frac{8 \mu U_{\text{avg}}}{R^2} = \frac{8 (0.001) (0.5)}{(0.1)^2} = 0.4 \text{ Pa/m}
             \]
-            Grid independence confirmed (Medium and Fine mesh).
+            The simulated pressure drop matches this calculated analytical value of $0.4$ Pa/m exactly.
             \end{block}
         \end{column}
     \end{columns}
@@ -223,20 +220,13 @@
     \end{columns}
 \end{frame}
 
-\begin{frame}{Alternative Approach: Periodic Boundary Conditions}
-    \begin{block}{Translationally Periodic BCs}
-    If the entrance region development is not of interest, the fully developed flow can be directly simulated using \textbf{Periodic Boundary Conditions}.
-    \end{block}
-    \vspace{0.2cm}
-    \bi
-        \im The inlet and outlet are linked as a periodic pair.
-        \im Instead of specifying a velocity inlet, a \textbf{specified mass flow rate} is enforced.
-        \im The simulation instantly yields the fully developed parabolic velocity profile across the entire domain, saving computational cost by avoiding the long entrance length.
-    \ei
-\end{frame}
+
 
 % --- TUTORIAL 2 START ---
 \section{Tutorial 2: Flow Over a Cylinder}
+\begin{frame}
+    \centering \Huge \textbf{Tutorial 2: Flow Over a Cylinder}
+\end{frame}
 \begin{frame}{Problem Statement \& Objective}
     \begin{block}{Objective}
     Perform 2D numerical simulations of unsteady flow of a Newtonian, incompressible fluid over a cylinder to study vortex shedding.
@@ -355,6 +345,9 @@
 
 % --- TUTORIAL 5 START ---
 \section{Tutorial 5: Gas-Solid Fluidized Bed}
+\begin{frame}
+    \centering \Huge \textbf{Tutorial 5: Gas-Solid Fluidized Bed}
+\end{frame}
 \begin{frame}{Problem Statement \& Objective}
     \begin{block}{Objective}
     Perform Eulerian Two-Fluid Model (TFM) simulations of gas-solid fluidization in a pseudo-2D rectangular bed to investigate bubbling dynamics.
@@ -482,6 +475,9 @@
 
 % --- TUTORIAL 6 START ---
 \section{Tutorial 6: Free Surface Flow (Bubble Rise)}
+\begin{frame}
+    \centering \Huge \textbf{Tutorial 6: Free Surface Flow (Bubble Rise)}
+\end{frame}
 \begin{frame}{Problem Statement \& Objective}
     \begin{block}{Objective}
     Perform 2D numerical simulations of a single air bubble rising in a quiescent liquid (water) using the Volume of Fluid (VOF) method.
