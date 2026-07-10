@@ -26,14 +26,7 @@ An unstructured mesh with inflation layers near the cylinder was generated. The 
 \end{figure}
 
 \section{Results \& Discussion}
-\subsection{Velocity Contours: Vortex Street}
-At $Re=272$, distinct alternating vortices (Von Kármán vortex street) are shed. When switching to the Standard $k-\epsilon$ model ($Re=2902$), the vortex shedding is heavily damped and the wake is smeared, a known limitation of the standard RANS formulation due to excessive turbulent viscosity production in the wake.
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.48\linewidth]{../vel-contour-272-2000.png}
-    \includegraphics[width=0.48\linewidth]{../vel-contour-2902-2000.png}
-    \caption{Velocity contours. Left: Laminar ($Re = 272$). Right: Turbulent ($Re = 2902$).}
-\end{figure}
+
 
 \subsection{Frequency Analysis}
 The y-velocity at a point behind the cylinder was monitored. For the laminar case ($Re=272$), the oscillation period $T$ from the probe data was approximately $11$ s, yielding a shedding frequency $f \approx 0.091$ Hz. This perfectly aligns with the analytical expected Strouhal number $St = fD/U \approx 0.183$ (which predicts $f = 0.183 \times 0.5 / 1 = 0.0915$ Hz). For the turbulent case, the Standard $k-\epsilon$ model damped out the oscillations entirely, yielding a steady symmetric wake.
