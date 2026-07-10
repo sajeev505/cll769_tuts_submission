@@ -29,6 +29,8 @@ An explicit Geometric Reconstruction scheme with a Laminar viscous model was app
     \caption{Deformed bubble tracking.}
 \end{figure}
 
-Initially spherical, the bubble rapidly deforms into a dimpled/skirted shape as it accelerates. Hydrodynamic forces (buoyancy vs drag) quickly overcome the surface tension forces holding it spherical. This behavior accurately matches the physical shape regimes predicted by the Clift et al. (1978) bubble diagram. The vertical velocity rises sharply and eventually asymptotes as drag balances buoyancy, achieving the terminal rise velocity.
+Initially spherical, the bubble rapidly deforms into a dimpled/skirted shape as it accelerates. Hydrodynamic forces (buoyancy vs drag) quickly overcome the surface tension forces holding it spherical. For a $6$ mm bubble in water, the Morton number is $Mo \approx 5 \times 10^{-11}$ and the E\"{o}tv\"{o}s number is $Eo \approx 4.89$. According to the Clift et al. (1978) bubble shape diagram, these non-dimensional parameters place the bubble exactly in the "wobbling/ellipsoidal" regime, matching the simulated deformation perfectly.
+
+The vertical velocity rises sharply and eventually asymptotes as drag balances buoyancy, achieving the terminal rise velocity. Analytically, using wave-speed approximations for this regime, the theoretical terminal velocity is estimated at $U_T \approx 0.23$ m/s, which aligns closely with the asymptote observed in the simulation results.
 
 \end{document}

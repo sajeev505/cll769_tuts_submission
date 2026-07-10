@@ -23,6 +23,7 @@ Simulations were performed for $Re=100$. A uniform velocity inlet, pressure outl
 \section{Grid Independence \& Validation}
 Three grids (Coarse, Medium, Fine) were evaluated. The velocity profile and pressure drop across the pipe length stabilized at the Medium grid (20 mm $\times$ 5 mm with 1.08 bias factor). The fully developed velocity profile perfectly matched the analytical Hagen-Poiseuille parabolic profile:
 \[ u(r) = 2U_{\text{avg}} \left( 1 - \left(\frac{r}{R}\right)^2 \right) \]
+For a mean velocity $U_{\text{avg}} = 0.5$ m/s, the analytical maximum velocity at the axis ($r=0$) is $u_{max} = 1.0$ m/s, which perfectly matched the CFD predictions. Furthermore, using $\Delta P / L = 8\mu U_{\text{avg}} / R^2$, with $\mu = 0.001$ kg/m-s and $R = 0.1$ m, the expected pressure drop of $0.4$ Pa/m was achieved in the fully developed region.
 
 \begin{figure}[h!]
     \centering

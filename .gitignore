@@ -14,7 +14,6 @@
 # Ansys & Fluent large data files
 *.cas
 *.dat
-*.cas.h5
 *.dat.h5
 *.msh
 *.msh.h5
