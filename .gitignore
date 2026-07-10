@@ -1,0 +1,33 @@
+# LaTeX temporary files
+*.aux
+*.log
+*.nav
+*.out
+*.snm
+*.toc
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.bbl
+*.blg
+
+# Ansys & Fluent large data files
+*.cas
+*.dat
+*.cas.h5
+*.dat.h5
+*.msh
+*.msh.h5
+*.wbpj
+*_files/
+*.trn
+*.trn.trn
+*.trn.bak
+*.bak
+*.cdat
+*.cff
+*.ip
+
+# OS generated files
+.DS_Store
+Thumbs.db
